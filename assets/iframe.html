@@ -3,23 +3,86 @@
   <meta charset="utf-8">
   <!-- http://garden.zendesk.com -->
  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@zendeskgarden/css-bedrock@7.0" type="text/css"> -->
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="semantic.min.css">
 </head>
 <body>
-  <div id="content"></div>
+  <div id="content" style="padding:1px;"></div>
   
   <script id="tasks-hdbs" type="text/x-handlebars-template">
-    <p>Tech notes tasks:</p>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{name}}</li>
-        <li class="list-group-item">Dapibus ac facilisis in</li>
-        <li class="list-group-item">Morbi leo risus</li>
-        <li class="list-group-item">Porta ac consectetur ac</li>
-        <li class="list-group-item">Vestibulum at eros</li>
-      </ul>
-    <ul>
-      <li><a href="https://app.asana.com/0/155581874072676/" target="_blank">{{name}}</a></li>
-    </ul>
+
+    <div class="ui styled accordion" style="padding:2px;">
+        <div class="active title">
+          Details
+          <i class="dropdown icon"></i>
+        </div>
+        <div class="active content">
+          <div class="ui list">
+              <div class="item">
+                <i class="icon user"></i>
+                <div class="content">
+                  <strong>Name&nbsp;</strong>
+                  {{name}}
+                </div>
+              </div>
+              <div class="item">
+                <i class="industry icon"></i>
+                <div class="content">
+                    <strong>Company&nbsp;</strong>
+                    {{company_name}}
+                  </div>
+              </div>
+              <div class="item">
+                  <i class="address card icon"></i>
+                  <div class="content">
+                    <strong>Address&nbsp;</strong>
+                    {{address.city}}, {{address.country}}
+                  </div>
+              </div>
+              {{#each emails}}
+              <div class="item">
+                <i class="mail icon"></i>
+                <div class="content">
+                    <strong>Email&nbsp;</strong>
+                  <a href="mailto:{{email}}">{{email}} ({{category}})</a>
+                </div>
+              </div>
+              {{/each}}
+              {{#each websites}}
+              <div class="item">
+                <i class="linkify icon"></i>
+                <div class="content">
+                    <strong>Website&nbsp;</strong>
+                  <a href="{{url}}" target="_blank">{{url}} ({{category}})</a>
+                </div>
+              </div>
+              {{/each}}
+              {{#each socials}}
+              <div class="item">
+                <i class="linkify icon"></i>
+                <div class="content">
+                    <strong>Social&nbsp;</strong>
+                  <a href="{{url}}" target="_blank">{{url}} ({{category}})</a>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+        </div>
+        <div class="title">
+            Opportunities
+            <i class="dropdown icon"></i>
+          </div>
+          <div class="content">
+            
+        </div>
+        <div class="title">
+          Tasks
+          <i class="dropdown icon"></i>
+        </div>
+        <div class="content">
+          <p>Work in progress</p>
+        </div>
+      </div>
+      <script>$('.ui.accordion').accordion();</script>
   </script>
 
   <script id="error-hdbs" type="text/x-handlebars-template">
@@ -28,8 +91,12 @@
   
   <!-- https://github.com/zendesk/zendesk_app_framework_sdk -->
   <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
-  <script src="https://cdn.jsdelivr.net/jquery/3.0.0/jquery.min.js"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+  <script src="semantic.min.js"></script>
   <script type="text/javascript" src="main.js"></script>
 </body>
 </html>
