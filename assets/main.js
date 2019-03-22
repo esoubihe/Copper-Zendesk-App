@@ -5,27 +5,30 @@ $(function() {
 });
   
   function getProfile(client) {
-    var settings = {
-      url: 'https://api.prosperworks.com/developer_api/v1/people/fetch_by_email',
-      headers: {
-          "X-PW-AccessToken": '60f746ba5ee0055026815883ded69657',
-          "X-PW-Application": 'developer_api',
-          "X-PW-UserEmail": 'eduardo@maxihost.com.br',
-          "Content-Type": 'application/json'
+    client.get('ticket').then(function(data) {
+      email = data.ticket.requester.email;
+      var settings = {
+        url: 'https://api.prosperworks.com/developer_api/v1/people/fetch_by_email',
+        headers: {
+            "X-PW-AccessToken": '60f746ba5ee0055026815883ded69657',
+            "X-PW-Application": 'developer_api',
+            "X-PW-UserEmail": 'eduardo@maxihost.com.br',
+            "Content-Type": 'application/json'
+          },
+        data: JSON.stringify({email: email}),
+        secure: false,
+        type: 'POST',
+        dataType: 'json'
+      };
+      client.request(settings).then(
+        function(data) {
+          showTaskData(data);
         },
-      data: JSON.stringify({email: 'behic.uzel@medianova.com'}),
-      secure: false,
-      type: 'POST',
-      dataType: 'json'
-    };
-    client.request(settings).then(
-      function(data) {
-        showTaskData(data);
-      },
-      function(response) {
-        showError(response);
-      }
-    );
+        function(response) {
+          showError(response);
+        }
+      );
+    });
   }
   
   function showTaskData(tasks) {
