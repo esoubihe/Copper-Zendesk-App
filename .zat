@@ -1,5 +1,7 @@
 {
   "subdomain": "maxihost",
   "username": "eduardo@maxihost.com.br/token",
-  "password": "qQUsIohjBOImOIbJsO1l4LEZFN0x56YDudU5ondC"
+  "password": "qQUsIohjBOImOIbJsO1l4LEZFN0x56YDudU5ondC",
+  "zat_latest": "2.13.0",
+  "zat_update_check": "2019-03-22"
 }
