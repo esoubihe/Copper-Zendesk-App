@@ -1,0 +1,35 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- http://garden.zendesk.com -->
+ <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@zendeskgarden/css-bedrock@7.0" type="text/css"> -->
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+  <div id="content"></div>
+  
+  <script id="tasks-hdbs" type="text/x-handlebars-template">
+    <p>Tech notes tasks:</p>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{name}}</li>
+        <li class="list-group-item">Dapibus ac facilisis in</li>
+        <li class="list-group-item">Morbi leo risus</li>
+        <li class="list-group-item">Porta ac consectetur ac</li>
+        <li class="list-group-item">Vestibulum at eros</li>
+      </ul>
+    <ul>
+      <li><a href="https://app.asana.com/0/155581874072676/" target="_blank">{{name}}</a></li>
+    </ul>
+  </script>
+
+  <script id="error-hdbs" type="text/x-handlebars-template">
+    <p>Problem with the request: {{status}} {{statusText}}</p>
+  </script>
+  
+  <!-- https://github.com/zendesk/zendesk_app_framework_sdk -->
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery/3.0.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+</body>
+</html>
