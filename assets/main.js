@@ -10,9 +10,9 @@ $(function() {
       var settings = {
         url: 'https://api.prosperworks.com/developer_api/v1/people/fetch_by_email',
         headers: {
-            "X-PW-AccessToken": '60f746ba5ee0055026815883ded69657',
+            "X-PW-AccessToken": 'dd8e85f7e5b705261fc31dda6599ae53',
             "X-PW-Application": 'developer_api',
-            "X-PW-UserEmail": 'eduardo@maxihost.com.br',
+            "X-PW-UserEmail": 'guilherme@maxihost.com.br',
             "Content-Type": 'application/json'
           },
         data: JSON.stringify({email: email}),
