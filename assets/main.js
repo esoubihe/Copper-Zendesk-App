@@ -101,7 +101,7 @@ function showError(response) {
 }
 
 function initTicketApp() {
-  client.invoke('resize', { width: '100%', height: '400px' });
+  client.invoke('resize', { width: '100%', height: '200px' });
   getProfile();
 }
 
@@ -110,7 +110,7 @@ function openAddCustomerModal() {
     location: 'modal',
     url: 'assets/iframe.html',
     size: {
-      width: '70vw',
+      width: '30vw',
       height: '60vh'
     }
   }).then(function(modalContext) {
