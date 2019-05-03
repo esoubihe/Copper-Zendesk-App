@@ -9,8 +9,7 @@
   "private": true,
   "location": {
     "support": {
-      "ticket_sidebar": "assets/iframe.html",
-      "modal": "assets/modal.html"
+      "ticket_sidebar": "assets/iframe.html"
     }
   },
   "domainWhitelist": ["api.prosperworks.com"],

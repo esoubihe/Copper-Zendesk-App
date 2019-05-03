@@ -77,12 +77,62 @@
   </script>
 
   <script id="add-customer" type="text/x-handlebars-template">
-    <button onclick="addCustomerModal()" class="ui button">Add to Copper</button>
+    <button onclick="openAddCustomerModal()" class="ui button">Add to Copper</button>
+  </script>
+
+
+  <script id="add-customer-modal" type="text/x-handlebars-template">
+    <form action="#" id="add-customer-form" class="ui form">
+      <h2 class="ui header">Add a customer</h2>
+      <div class="field">
+        <div class="ui input">
+          <input type="text" name="firstName" placeholder="First name" value={{{firstName}}}>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui input">
+          <input type="text" name="lastName" placeholder="Last name" value={{lastName}}>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui input">
+          <input type="email" name="email" placeholder="Email" value={{email}}>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui input">
+          <input type="text" name="company" placeholder="Company">
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui input">
+          <input type="text" name="title" placeholder="Title">
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui input">
+          <input type="text" name="owner" placeholder="Owner">
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui input">
+          <input type="text" name="address" placeholder="Address">
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui input">
+          <input type="text" name="phoneNumber" placeholder="Phone number">
+        </div>
+      </div>
+      <button type="submit" class="ui fluid submit button">Submit</button>
+    </form>
   </script>
 
   <script id="error-hdbs" type="text/x-handlebars-template">
-    <p>Client doesn't exist in CRM</p>
+    <p>{{status}}: {{statusText}}</p>
   </script>
+
+
   
   <!-- https://github.com/zendesk/zendesk_app_framework_sdk -->
   <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
