@@ -1,4 +1,4 @@
-// varants
+// constants
 var CURRENT_TICKET_AUTHOR = '@copper-zendesk/add_customer_initial_data';
 
 var COPPER_API_HEADERS = { 
@@ -8,6 +8,7 @@ var COPPER_API_HEADERS = {
   "Content-Type": 'application/json'
 }
 
+// shared code
 var client = ZAFClient.init();
 
 function init(location) {
@@ -50,8 +51,8 @@ function safeLocalstorageSetItem(key, item) {
 }
 
 function getProfile() {
+  showLoading();
   var RESOURCE_NOT_FOUND = 'Resource not found';
-  switchTo('loading');
   client.get('ticket').then(function(data) {
     var email = data.ticket.requester.email;
     var name = data.ticket.requester.name;
@@ -100,30 +101,30 @@ function showError(response) {
 }
 
 function initTicketApp() {
+  client.invoke('resize', { width: '100%', height: '400px' });
   getProfile();
 }
 
-
-// Modal code 
 function openAddCustomerModal() {
   client.invoke('instances.create', {
     location: 'modal',
     url: 'assets/iframe.html',
     size: {
-      width: '50vw',
+      width: '70vw',
       height: '60vh'
     }
   }).then(function(modalContext) {
     var modalClient = client.instance(modalContext['instances.create'][0].instanceGuid);
     modalClient.on('modal.save', function() {
-      switchTo('loading');
       getProfile();
     })
   });
-
 }
 
-
+// Modal code 
+function showAddCustomerForm(context) {
+  switchTo('add-customer-form', context)
+}
 
 function getInputValue(elements, key) {
   if (elements[key]) {
@@ -132,25 +133,23 @@ function getInputValue(elements, key) {
   return null;
 }
 
-
-function successPromise() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(123);
-    }, 2000)
-  })
-}
-
 function createNewCopperUserObject(data) {
   var newUserObject = {};
   newUserObject.name = data.name;
   newUserObject.emails = [{ email: data.email }];
-  newUserObject.company_name = data.company;
+  newUserObject['company_name'] = data.company;
   newUserObject.title = data.title;
   newUserObject.owner = data.owner;
-  // newUserObject.address = data.address;
-  newUserObject.phoneNumbers = [{
+  newUserObject.address = {
+    street: data.street,
+    city: data.city,
+    state: data.state,
+    postal_code: data.postalCode,
+    country: data.country,
+  };
+  newUserObject['phone_numbers'] = [{
     number: data.phoneNumber,
+    category: 'mobile',
   }];
   return newUserObject;
 }
@@ -165,7 +164,11 @@ function onAddCustomerSubmit(event) {
     company: getInputValue(elements, 'company'),
     title: getInputValue(elements, 'title'),
     owner: getInputValue(elements, 'owner'),
-    address: getInputValue(elements, 'address'),
+    street: getInputValue(elements, 'street'),
+    city: getInputValue(elements, 'city'),
+    state: getInputValue(elements, 'state'),
+    postalCode: getInputValue(elements, 'postalCode'),
+    country: getInputValue(elements, 'country'),
     phoneNumber: getInputValue(elements, 'phoneNumber'),
   };
   var newCopperUserObject = createNewCopperUserObject(formData);
@@ -177,28 +180,23 @@ function onAddCustomerSubmit(event) {
     type: 'POST',
     dataType: 'json'
   };
-  var button = document.querySelector('button[type="submit"]');
+  var button = $('button[type="submit"]');
   if (button) {
-    button.classList.add('disabled', 'loading');
+    button.addClass('disabled loading');
   }
   client.request(settings).then(function(data) {
-    console.log(data);
     if(button) {
-      button.classList.remove('disabled', 'loading');
+      button.removeClass('disabled loading');
     }
     client.trigger('modal.save');
     client.invoke('destroy')
   },
-  function(response) {
+  function() {
     if(button) {
       button.classList.remove('disabled', 'loading');
     }
-    console.log(response);
+    // TODO: handle error
   })
-}
-
-function addCustomeFormValidation() {
-  return {};
 }
 
 function getCurrentTicketAuthor() {
@@ -209,13 +207,20 @@ function getCurrentTicketAuthor() {
   return currentTicketAuthor;
 }
 
+
+function addCustomerFormValidation() {
+  // TODO: form validation
+  return {};
+}
+
+
 function initAddCustomerModal() {
-  switchTo('loading');
+  showLoading();
   var currentTicketAuthor = getCurrentTicketAuthor();
-  switchTo('add-customer-modal', currentTicketAuthor)
+  showAddCustomerForm(currentTicketAuthor);
   var formElement = $('#add-customer-form');
   if (formElement) {
-    formElement.form(addCustomeFormValidation);
+    formElement.form(addCustomerFormValidation);
     formElement.on('submit', onAddCustomerSubmit);
   }
 }

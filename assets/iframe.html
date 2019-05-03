@@ -81,7 +81,7 @@
   </script>
 
 
-  <script id="add-customer-modal" type="text/x-handlebars-template">
+  <script id="add-customer-form" type="text/x-handlebars-template">
     <h2 class="ui header">Add a customer</h2>
     <form action="#" id="add-customer-form" class="ui form">
       <div class="field">
@@ -118,18 +118,42 @@
           </div>
         </div>
       </div>
-      <div class="two fields">
+      <div class="field">
+        <label>Street</label>
+        <div class="ui input">
+          <input type="text" name="street" placeholder="Street">
+        </div>
+      </div>
+      <div class="three fields">
         <div class="field">
-          <label>Address</label>
+          <label>City</label>
           <div class="ui input">
-            <input type="text" name="address" placeholder="Address">
+            <input type="text" name="city" placeholder="City">
           </div>
         </div>
         <div class="field">
-          <label>Phone Nubmer</label>
+          <label>State</label>
           <div class="ui input">
-            <input type="text" name="phoneNumber" placeholder="Phone number">
+            <input type="text" name="state" placeholder="State">
           </div>
+        </div>
+        <div class="field">
+          <label>Postal code</label>
+          <div class="ui input">
+            <input type="text" name="postalCode" placeholder="Postal Code">
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Country</label>
+        <div class="ui input">
+          <input type="text" name="country" placeholder="Country">
+        </div>
+      </div>
+      <div class="field">
+        <label>Phone Nubmer</label>
+        <div class="ui input">
+          <input type="text" name="phoneNumber" placeholder="Phone number">
         </div>
       </div>
       <button type="submit" class="ui fluid submit button">Submit</button>
