@@ -1,7 +1,7 @@
-// constants
+// varants
 var CURRENT_TICKET_AUTHOR = '@copper-zendesk/add_customer_initial_data';
 
-var COPPER_HEADER = { 
+var COPPER_API_HEADERS = { 
   "X-PW-AccessToken": 'd25e356381a5496eb45f58a3944bc55c',
   "X-PW-Application": 'developer_api',
   "X-PW-UserEmail": 'rostogiorgi@gmail.com',
@@ -18,6 +18,24 @@ function init(location) {
   }
 }
 
+function switchTo(template_name, context) {
+  var template_id = "#" + template_name;
+  var source = $(template_id).html();
+  var template = Handlebars.compile(source);
+  if (context) {
+    var html = template(context);
+  } else {
+    var html = template();
+  }
+  $("#content").html(html);
+}
+
+client.on('app.registered', function(data) {
+  init(data.context.location);
+});
+
+
+// Ticket sidebar
 function isObject (value) {
   return value && typeof value === 'object' && value.constructor === Object;
 }
@@ -33,16 +51,16 @@ function safeLocalstorageSetItem(key, item) {
 
 function getProfile() {
   var RESOURCE_NOT_FOUND = 'Resource not found';
-  
+
   client.get('ticket').then(function(data) {
+    switchTo('loading');
     var email = data.ticket.requester.email;
     var name = data.ticket.requester.name;
     safeLocalstorageSetItem(CURRENT_TICKET_AUTHOR, { email, name });
     var settings = {
       url: 'https://api.prosperworks.com/developer_api/v1/people/fetch_by_email',
-      headers: COPPER_HEADER,
+      headers: COPPER_API_HEADERS,
       data: JSON.stringify({ email }),
-      secure: false,
       type: 'POST',
       dataType: 'json'
     };
@@ -60,6 +78,10 @@ function getProfile() {
       }
     );
   });
+}
+
+function showLoading() {
+  switchTo('loading');
 }
 
 function showTaskData(tasks) {
@@ -83,6 +105,7 @@ function initTicketApp() {
 }
 
 
+// Modal code 
 function openAddCustomerModal() {
   client.invoke('instances.create', {
     location: 'modal',
@@ -93,9 +116,10 @@ function openAddCustomerModal() {
     }
   }).then(function(modalContext) {
     var modalClient = client.instance(modalContext['instances.create'][0].instanceGuid);
-    modalClient.on('modal.close', function() {
-      
-    });
+    modalClient.on('modal.save', function() {
+      switchTo('loading');
+      getProfile();
+    })
   });
 
 }
@@ -120,17 +144,17 @@ function successPromise() {
 
 function onAddCustomerSubmit(event) {
   event.preventDefault();
-  const form = event.target;
-  const elements = form.elements;
-  const firstName = getInputValue(elements, 'firstName');
-  const lastName =  getInputValue(elements, 'lastName');
-  const email = getInputValue(elements, 'email');
-  const company = getInputValue(elements, 'company');
-  const title = getInputValue(elements, 'title');
-  const owner = getInputValue(elements, 'owner');
-  const address = getInputValue(elements, 'address');
-  const phoneNumber = getInputValue(elements, 'phoneNumber');
-  const data = {
+  var form = event.target;
+  var elements = form.elements;
+  var firstName = getInputValue(elements, 'firstName');
+  var lastName =  getInputValue(elements, 'lastName');
+  var email = getInputValue(elements, 'email');
+  var company = getInputValue(elements, 'company');
+  var title = getInputValue(elements, 'title');
+  var owner = getInputValue(elements, 'owner');
+  var address = getInputValue(elements, 'address');
+  var phoneNumber = getInputValue(elements, 'phoneNumber');
+  var data = {
     email,
     firstName,
     lastName,
@@ -141,52 +165,41 @@ function onAddCustomerSubmit(event) {
     phoneNumber
   };
   var settings = {
-    url: 'https://api.prosperworks.com/developer_api/v1/people',
-    headers: COPPER_HEADER,
-    data: JSON.stringify(data),
+    url: 'https://api.prosperworks.com/developer_api/v1/contact_types',
+    headers: COPPER_API_HEADERS,
     secure: false,
-    type: 'POST',
+    type: 'GET',
     dataType: 'json'
   };
-  const button = document.querySelector('button[type="submit"]');
+  var button = document.querySelector('button[type="submit"]');
   if (button) {
     button.classList.add('disabled', 'loading');
   }
-  successPromise().then(function(data) {
+  client.request(settings).then(function(data) {
     console.log(data);
     if(button) {
       button.classList.remove('disabled', 'loading');
     }
-    client.invoke('destroy');
+    client.trigger('modal.save');
+    client.invoke('destroy')
   },
   function(response) {
+    if(button) {
+      button.classList.remove('disabled', 'loading');
+    }
     console.log(response);
   })
 }
 
 function initAddCustomerModal() {
-  var currentTicketAuthor = JSON.parse(localStorage.getItem(CURRENT_TICKET_AUTHOR));
+  var currentTicketAuthor;
+  try {
+    console.log(localStorage.getItem(CURRENT_TICKET_AUTHOR));
+    currentTicketAuthors = JSON.parse(localStorage.getItem(CURRENT_TICKET_AUTHOR));
+  } catch (err) {}
   switchTo('add-customer-modal', currentTicketAuthor)
-  const form = document.querySelector('#add-customer-form');
+  var form = document.querySelector('#add-customer-form');
   if (form) {
     form.addEventListener('submit', onAddCustomerSubmit)
   }
 }
-
-
-function switchTo(template_name, context) {
-  var template_id = "#" + template_name;
-  var source = $(template_id).html();
-  var template = Handlebars.compile(source);
-  if (context) {
-    var html = template(context);
-  } else {
-    var html = template();
-  }
-  $("#content").html(html);
-}
-
-client.on('app.registered', function(data) {
-  init(data.context.location);
-});
-
