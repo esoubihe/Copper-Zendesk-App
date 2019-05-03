@@ -51,9 +51,8 @@ function safeLocalstorageSetItem(key, item) {
 
 function getProfile() {
   var RESOURCE_NOT_FOUND = 'Resource not found';
-
+  switchTo('loading');
   client.get('ticket').then(function(data) {
-    switchTo('loading');
     var email = data.ticket.requester.email;
     var name = data.ticket.requester.name;
     safeLocalstorageSetItem(CURRENT_TICKET_AUTHOR, { email, name });
@@ -142,33 +141,40 @@ function successPromise() {
   })
 }
 
+function createNewCopperUserObject(data) {
+  var newUserObject = {};
+  newUserObject.name = data.name;
+  newUserObject.emails = [{ email: data.email }];
+  newUserObject.company_name = data.company;
+  newUserObject.title = data.title;
+  newUserObject.owner = data.owner;
+  // newUserObject.address = data.address;
+  newUserObject.phoneNumbers = [{
+    number: data.phoneNumber,
+  }];
+  return newUserObject;
+}
+
 function onAddCustomerSubmit(event) {
   event.preventDefault();
   var form = event.target;
   var elements = form.elements;
-  var firstName = getInputValue(elements, 'firstName');
-  var lastName =  getInputValue(elements, 'lastName');
-  var email = getInputValue(elements, 'email');
-  var company = getInputValue(elements, 'company');
-  var title = getInputValue(elements, 'title');
-  var owner = getInputValue(elements, 'owner');
-  var address = getInputValue(elements, 'address');
-  var phoneNumber = getInputValue(elements, 'phoneNumber');
-  var data = {
-    email,
-    firstName,
-    lastName,
-    company,
-    title,
-    owner,
-    address,
-    phoneNumber
+  var formData = {
+    name: getInputValue(elements, 'name'),
+    email: getInputValue(elements, 'email'),
+    company: getInputValue(elements, 'company'),
+    title: getInputValue(elements, 'title'),
+    owner: getInputValue(elements, 'owner'),
+    address: getInputValue(elements, 'address'),
+    phoneNumber: getInputValue(elements, 'phoneNumber'),
   };
+  var newCopperUserObject = createNewCopperUserObject(formData);
   var settings = {
-    url: 'https://api.prosperworks.com/developer_api/v1/contact_types',
+    url: 'https://api.prosperworks.com/developer_api/v1/people',
     headers: COPPER_API_HEADERS,
+    data: JSON.stringify(newCopperUserObject),
     secure: false,
-    type: 'GET',
+    type: 'POST',
     dataType: 'json'
   };
   var button = document.querySelector('button[type="submit"]');
@@ -191,15 +197,25 @@ function onAddCustomerSubmit(event) {
   })
 }
 
-function initAddCustomerModal() {
+function addCustomeFormValidation() {
+  return {};
+}
+
+function getCurrentTicketAuthor() {
   var currentTicketAuthor;
   try {
-    console.log(localStorage.getItem(CURRENT_TICKET_AUTHOR));
-    currentTicketAuthors = JSON.parse(localStorage.getItem(CURRENT_TICKET_AUTHOR));
-  } catch (err) {}
+    currentTicketAuthor = JSON.parse(localStorage.getItem(CURRENT_TICKET_AUTHOR));
+  } catch(err) {}
+  return currentTicketAuthor;
+}
+
+function initAddCustomerModal() {
+  switchTo('loading');
+  var currentTicketAuthor = getCurrentTicketAuthor();
   switchTo('add-customer-modal', currentTicketAuthor)
-  var form = document.querySelector('#add-customer-form');
-  if (form) {
-    form.addEventListener('submit', onAddCustomerSubmit)
+  var formElement = $('#add-customer-form');
+  if (formElement) {
+    formElement.form(addCustomeFormValidation);
+    formElement.on('submit', onAddCustomerSubmit);
   }
 }

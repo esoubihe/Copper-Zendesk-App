@@ -82,46 +82,54 @@
 
 
   <script id="add-customer-modal" type="text/x-handlebars-template">
+    <h2 class="ui header">Add a customer</h2>
     <form action="#" id="add-customer-form" class="ui form">
-      <h2 class="ui header">Add a customer</h2>
       <div class="field">
+        <label>Full Name</label>
         <div class="ui input">
-          <input type="text" name="firstName" placeholder="First name" value={{{firstName}}}>
+          <input type="text" name="name" placeholder="Full Name" value="{{name}}">
         </div>
       </div>
-      <div class="field">
-        <div class="ui input">
-          <input type="text" name="lastName" placeholder="Last name" value={{lastName}}>
+      <div class="two fields">
+        <div class="field">
+          <label>Email</label>
+          <div class="ui input">
+            <input type="email" name="email" placeholder="Email" value="{{email}}">
+          </div>
+        </div>
+        <div class="field">
+          <label>Company</label>
+          <div class="ui input">
+            <input type="text" name="company" placeholder="Company">
+          </div>
         </div>
       </div>
-      <div class="field">
-        <div class="ui input">
-          <input type="email" name="email" placeholder="Email" value={{email}}>
+      <div class="two fields">
+        <div class="field">
+          <label>Title</label>
+          <div class="ui input">
+            <input type="text" name="title" placeholder="Title">
+          </div>
+        </div>
+        <div class="field">
+          <label>Owner</label>
+          <div class="ui input">
+            <input type="text" name="owner" placeholder="Owner">
+          </div>
         </div>
       </div>
-      <div class="field">
-        <div class="ui input">
-          <input type="text" name="company" placeholder="Company">
+      <div class="two fields">
+        <div class="field">
+          <label>Address</label>
+          <div class="ui input">
+            <input type="text" name="address" placeholder="Address">
+          </div>
         </div>
-      </div>
-      <div class="field">
-        <div class="ui input">
-          <input type="text" name="title" placeholder="Title">
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui input">
-          <input type="text" name="owner" placeholder="Owner">
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui input">
-          <input type="text" name="address" placeholder="Address">
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui input">
-          <input type="text" name="phoneNumber" placeholder="Phone number">
+        <div class="field">
+          <label>Phone Nubmer</label>
+          <div class="ui input">
+            <input type="text" name="phoneNumber" placeholder="Phone number">
+          </div>
         </div>
       </div>
       <button type="submit" class="ui fluid submit button">Submit</button>
