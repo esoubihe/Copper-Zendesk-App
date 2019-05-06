@@ -5,6 +5,7 @@
     "email": "eduardo@maxihost.com.br",
     "url": "https://www.maxihost.com"
   },
+  "defaultLocale": "en",
   "private": false,
   "location": {
     "support": {
