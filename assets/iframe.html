@@ -8,17 +8,6 @@
 <body>
   <div id="content" style="padding:1px;"></div>
 
-  <script id="test" type="text/x-handlebars-template">
-    <div class="ui form">
-      <div class="field">
-        <label>Company</label>
-        <select id="company-select" class="ui search selection dropdown">
-          <option value="">Select Company</option>
-        </select>
-      </div>
-    </div>
-  </script>
-  
   <script id="tasks-hdbs" type="text/x-handlebars-template">
 
     <div class="ui basic segment">
@@ -86,21 +75,21 @@
       <div class="field">
         <label>Full Name</label>
         <div class="ui input">
-          <input type="text" name="name" placeholder="Full Name" value="{{name}}">
+          <input type="text" name="name" placeholder="Full Name" value="{{name}}" required>
         </div>
       </div>
       <div class="two fields">
         <div class="field">
           <label>Email</label>
           <div class="ui input">
-            <input type="email" name="email" placeholder="Email" value="{{email}}">
+            <input type="email" name="email" placeholder="Email" value="{{email}}" required>
           </div>
         </div>
         <div class="field">
-          <label>Company</label>
-          <div class="ui input">
-            <input type="text" name="company" placeholder="Company">
-          </div>
+          <label>Owner</label>
+          <select id="owners-select" name="owner" class="ui search selection dropdown">
+            <option value="">Select Owner</option>
+          </select>
         </div>
       </div>
       <div class="two fields">

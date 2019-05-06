@@ -11,41 +11,7 @@ var COPPER_API_HEADERS = {
 // shared code
 var client = ZAFClient.init();
 
-
-function fetchCompanies() {
-  var dropdown = $('#company-select');
-  dropdown.dropdown();
-  var settings = {
-    url: 'https://api.prosperworks.com/developer_api/v1/companies/search',
-    headers: COPPER_API_HEADERS,
-    data: JSON.stringify({
-      'page_size': 25,
-      'sort_by': 'name',
-    }),
-    type: 'POST',
-    secure: true,
-    dataType: 'json'
-  };
-  client.request(settings).then(function(data) {
-    $.each(data, function() {
-      dropdown.append($("<option />").val(this.id).text(this.name));
-    });
-  }).catch(function(response) {
-    // TODO: handle error
-  });
-}
-
-function getCopperAPICredintials() {
-  client.metadata().then(function(metadata) {
-    console.log(metadata.settings);
-  });
-}
-
 function init(location) {
-  getCopperAPICredintials();
-  switchTo('test')
-  fetchCompanies();
-  return;
   if(location === 'modal') {
     initAddCustomerModal();
   } else {
@@ -96,7 +62,8 @@ function getProfile() {
       headers: COPPER_API_HEADERS,
       data: JSON.stringify({ email }),
       type: 'POST',
-      dataType: 'json'
+      dataType: 'json',
+      secure: true,
     };
     client.request(settings).then(
       function(data) {
@@ -171,9 +138,8 @@ function createNewCopperUserObject(data) {
   var newUserObject = {};
   newUserObject.name = data.name;
   newUserObject.emails = [{ email: data.email }];
-  newUserObject['company_name'] = data.company;
   newUserObject.title = data.title;
-  newUserObject.owner = data.owner;
+  newUserObject['assignee_id'] = data.owner;
   newUserObject.address = {
     street: data.street,
     city: data.city,
@@ -195,7 +161,6 @@ function onAddCustomerSubmit(event) {
   var formData = {
     name: getInputValue(elements, 'name'),
     email: getInputValue(elements, 'email'),
-    company: getInputValue(elements, 'company'),
     title: getInputValue(elements, 'title'),
     owner: getInputValue(elements, 'owner'),
     street: getInputValue(elements, 'street'),
@@ -210,9 +175,9 @@ function onAddCustomerSubmit(event) {
     url: 'https://api.prosperworks.com/developer_api/v1/people',
     headers: COPPER_API_HEADERS,
     data: JSON.stringify(newCopperUserObject),
-    secure: false,
+    secure: true,
     type: 'POST',
-    dataType: 'json'
+    dataType: 'json',
   };
   var button = $('button[type="submit"]');
   if (button) {
@@ -247,11 +212,35 @@ function addCustomerFormValidation() {
   return {};
 }
 
+function populateOwnersDropdown() {
+  var dropdown = $('#owners-select');
+  dropdown.dropdown({
+  });
+  var settings = {
+    url: 'https://api.prosperworks.com/developer_api/v1/users/search',
+    headers: COPPER_API_HEADERS,
+    data: JSON.stringify({
+      'page_size': 200,
+      'sort_by': 'name',
+    }),
+    type: 'POST',
+    secure: true,
+    dataType: 'json'
+  };
+  client.request(settings).then(function(data) {
+    $.each(data, function() {
+      dropdown.append($("<option />").val(this.id).text(this.name));
+    });
+  }).catch(function(response) {
+    // TODO: handle error
+  });
+}
 
 function initAddCustomerModal() {
   showLoading();
   var currentTicketAuthor = getCurrentTicketAuthor();
   showAddCustomerForm(currentTicketAuthor);
+  populateOwnersDropdown();
   var formElement = $('#add-customer-form');
   if (formElement) {
     formElement.form(addCustomerFormValidation);
