@@ -14,5 +14,21 @@
   },
   "domainWhitelist": ["api.prosperworks.com"],
   "version": "1.0",
-  "frameworkVersion": "2.0"
+  "frameworkVersion": "2.0",
+  "parameters": [
+    {
+      "name": "token",
+      "label": "Acccess Token",
+      "type": "text",
+      "required": true,
+      "secure": true
+    },
+    {
+      "name": "email",
+      "label": "Copper Username",
+      "type": "text",
+      "required": true,
+      "secure": true
+    }
+  ]
 }

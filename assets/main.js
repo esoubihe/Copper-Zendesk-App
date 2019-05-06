@@ -2,16 +2,50 @@
 var CURRENT_TICKET_AUTHOR = '@copper-zendesk/add_customer_initial_data';
 
 var COPPER_API_HEADERS = { 
-  "X-PW-AccessToken": 'd25e356381a5496eb45f58a3944bc55c',
+  "X-PW-AccessToken": '{{setting.token}}',
   "X-PW-Application": 'developer_api',
-  "X-PW-UserEmail": 'rostogiorgi@gmail.com',
+  "X-PW-UserEmail": '{{setting.email}}',
   "Content-Type": 'application/json'
 }
 
 // shared code
 var client = ZAFClient.init();
 
+
+function fetchCompanies() {
+  var dropdown = $('#company-select');
+  dropdown.dropdown();
+  var settings = {
+    url: 'https://api.prosperworks.com/developer_api/v1/companies/search',
+    headers: COPPER_API_HEADERS,
+    data: JSON.stringify({
+      'page_size': 25,
+      'sort_by': 'name',
+    }),
+    type: 'POST',
+    secure: true,
+    dataType: 'json'
+  };
+  client.request(settings).then(function(data) {
+    $.each(data, function() {
+      dropdown.append($("<option />").val(this.id).text(this.name));
+    });
+  }).catch(function(response) {
+    // TODO: handle error
+  });
+}
+
+function getCopperAPICredintials() {
+  client.metadata().then(function(metadata) {
+    console.log(metadata.settings);
+  });
+}
+
 function init(location) {
+  getCopperAPICredintials();
+  switchTo('test')
+  fetchCompanies();
+  return;
   if(location === 'modal') {
     initAddCustomerModal();
   } else {
