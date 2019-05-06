@@ -1,1 +1,8 @@
-{}
+{
+    "app": {
+      "name": "Copper",
+      "short_description": "See data from your Copper CRM in Zendesk",
+      "long_description": "With Copper for Zendesk you can view and add people to your Copper CRM account, making it easier for sales reps to manage the CRM from the ticket tab.",
+      "installation_instructions": "Click install and fill in the app settings with your email and API token from Copper."
+    }
+  }
