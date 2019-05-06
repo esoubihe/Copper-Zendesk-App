@@ -3,10 +3,9 @@
   "author": {
     "name": "Eduardo",
     "email": "eduardo@maxihost.com.br",
-    "url": ""
+    "url": "https://www.maxihost.com"
   },
-  "defaultLocale": "en",
-  "private": true,
+  "private": false,
   "location": {
     "support": {
       "ticket_sidebar": "assets/iframe.html"
@@ -17,15 +16,15 @@
   "frameworkVersion": "2.0",
   "parameters": [
     {
-      "name": "token",
-      "label": "Acccess Token",
+      "name": "email",
+      "label": "Copper Username",
       "type": "text",
       "required": true,
       "secure": true
     },
     {
-      "name": "email",
-      "label": "Copper Username",
+      "name": "token",
+      "label": "Acccess Token",
       "type": "text",
       "required": true,
       "secure": true
