@@ -1,7 +1,8 @@
 {
-  "subdomain": "maxihost",
-  "username": "eduardo@maxihost.com.br/token",
-  "password": "qQUsIohjBOImOIbJsO1l4LEZFN0x56YDudU5ondC",
+  "app_id": 360000382560,
+  "subdomain": "grosto",
+  "username": "rostogiorgi@gmail.com",
+  "password": "123qweAsd",
   "zat_latest": "2.13.0",
-  "zat_update_check": "2019-03-22"
+  "zat_update_check": "2019-05-02"
 }

@@ -7,78 +7,153 @@
 </head>
 <body>
   <div id="content" style="padding:1px;"></div>
-  
+
   <script id="tasks-hdbs" type="text/x-handlebars-template">
 
-    <div class="ui styled accordion" style="padding:2px;">
-        <div class="active title">
-          Details
-          <i class="dropdown icon"></i>
-        </div>
-        <div class="active content">
-          <div class="ui list">
-              <div class="item">
-                  <strong>Name&nbsp;</strong>
-                  {{name}}
-              </div>
-              <div class="item">
-                  <strong>Company&nbsp;</strong>
-                  {{company_name}}
-              </div>
-              <div class="item">
-                  <strong>Address&nbsp;</strong>
-                  {{address.city}}, {{address.country}}
-              </div>
-              {{#each emails}}
-              <div class="item">
-                  <strong>Email&nbsp;</strong>
-                  <a href="mailto:{{email}}">{{email}} ({{category}})</a>
-              </div>
-              {{/each}}
-              <!--
-              {{#each websites}}
-              <div class="item">
-                <i class="linkify icon"></i>
-                <div class="content">
-                    <strong>Website&nbsp;</strong>
-                  <a href="{{url}}" target="_blank">{{url}} ({{category}})</a>
-                </div>
-              </div>
-              {{/each}}
-              {{#each socials}}
-              <div class="item">
-                <i class="linkify icon"></i>
-                <div class="content">
-                    <strong>Social&nbsp;</strong>
-                  <a href="{{url}}" target="_blank">{{url}} ({{category}})</a>
-                </div>
-              </div>
-              {{/each}}
-              -->
-            </div>
-            <a href="https://app.prosperworks.com/companies/278517/app?p=db#/contact/{{id}}" target="_blank" style="margin-top: 10px;">View profile</a>
-        </div>
-        <div class="title">
-            Opportunities
-            <i class="dropdown icon"></i>
+    <div class="ui basic segment">
+        <div class="ui small header">
+            Details
           </div>
-          <div class="content">
-            
-        </div>
-        <div class="title">
-          Tasks
-          <i class="dropdown icon"></i>
-        </div>
-        <div class="content">
-          <p>Work in progress</p>
+          <div class="active content">
+            <div class="ui list">
+                <div class="item">
+                    <strong>Name&nbsp;</strong>
+                    {{name}}
+                </div>
+                <div class="item">
+                    <strong>Company&nbsp;</strong>
+                    {{company_name}}
+                </div>
+                <div class="item">
+                    <strong>Address&nbsp;</strong>
+                    {{address.city}}, {{address.country}}
+                </div>
+                {{#each emails}}
+                <div class="item">
+                    <strong>Email&nbsp;</strong>
+                    <a href="mailto:{{email}}">{{email}} ({{category}})</a>
+                </div>
+                {{/each}}
+                <!--
+                {{#each websites}}
+                <div class="item">
+                  <i class="linkify icon"></i>
+                  <div class="content">
+                      <strong>Website&nbsp;</strong>
+                    <a href="{{url}}" target="_blank">{{url}} ({{category}})</a>
+                  </div>
+                </div>
+                {{/each}}
+                {{#each socials}}
+                <div class="item">
+                  <i class="linkify icon"></i>
+                  <div class="content">
+                      <strong>Social&nbsp;</strong>
+                    <a href="{{url}}" target="_blank">{{url}} ({{category}})</a>
+                  </div>
+                </div>
+                {{/each}}
+                -->
+              </div>
+              <a href="https://app.prosperworks.com/companies/278517/app?p=db#/contact/{{id}}" target="_blank" style="margin-top: 10px;">View profile</a>
+          </div>
+    </div>
+      
+  </script>
+
+  <script id="add-customer" type="text/x-handlebars-template">
+    <div class="ui basic segment">
+      <div>This person isn’t in Copper.</div>
+    </div>
+    <button onclick="openAddCustomerModal()" class="ui primary fluid button">Add to Copper</button>
+  </script>
+
+
+  <script id="add-customer-form" type="text/x-handlebars-template">
+    <p class="ui header"style="margin-bottom:0;">Add to copper</p>
+    <form action="#" id="add-customer-form" class="ui form">
+      <div class="field">
+        <label>Full Name</label>
+        <div class="ui input">
+          <input type="text" name="name" placeholder="Full Name" value="{{name}}" required>
         </div>
       </div>
-      <script>$('.ui.accordion').accordion();</script>
+      <div class="two fields">
+        <div class="field">
+          <label>Email</label>
+          <div class="ui input">
+            <input type="email" name="email" placeholder="Email" value="{{email}}" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>Owner</label>
+          <select id="owners-select" name="owner" class="ui search selection dropdown">
+            <option value="">Select Owner</option>
+          </select>
+        </div>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>Title</label>
+          <div class="ui input">
+            <input type="text" name="title" placeholder="Title">
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Street</label>
+        <div class="ui input">
+          <input type="text" name="street" placeholder="Street">
+        </div>
+      </div>
+      <div class="three fields">
+        <div class="field">
+          <label>City</label>
+          <div class="ui input">
+            <input type="text" name="city" placeholder="City">
+          </div>
+        </div>
+        <div class="field">
+          <label>State</label>
+          <div class="ui input">
+            <input type="text" name="state" placeholder="State">
+          </div>
+        </div>
+        <div class="field">
+          <label>Postal code</label>
+          <div class="ui input">
+            <input type="text" name="postalCode" placeholder="Postal Code">
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Country</label>
+        <div class="ui input">
+          <input type="text" name="country" placeholder="Country">
+        </div>
+      </div>
+      <div class="field">
+        <label>Phone Nubmer</label>
+        <div class="ui input">
+          <input type="text" name="phoneNumber" placeholder="Phone number">
+        </div>
+      </div>
+      <button type="submit" class="ui fluid primary submit button">Submit</button>
+    </form>
   </script>
 
   <script id="error-hdbs" type="text/x-handlebars-template">
-    <p>Client doesn't exist in CRM</p>
+    <p>{{status}}: {{statusText}}</p>
   </script>
+
+
+  <script id="loading" type="text/x-handlebars-template">
+    <div class="ui active inverted dimmer">
+      <div class="ui text loader">Loading</div>
+    </div>
+  </script>
+
+
   
   <!-- https://github.com/zendesk/zendesk_app_framework_sdk -->
   <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
