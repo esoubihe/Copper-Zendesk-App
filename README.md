@@ -12,3 +12,12 @@ Please submit bug reports to [Insert Link](). Pull requests are welcome.
 
 ### Screenshot(s):
 [put your screenshots down here.]
+
+
+### Development
+
+To start app in development for grosto.zandesk.com.
+
+```
+zat server -c settings.json --app-id=360000382560
+```
