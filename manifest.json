@@ -24,7 +24,7 @@
       "secure": true
     },
     {
-      "name": "token",
+      "name": "api_key",
       "label": "API Key",
       "type": "text",
       "required": true,
