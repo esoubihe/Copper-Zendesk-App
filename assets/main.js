@@ -2,7 +2,7 @@
 var CURRENT_TICKET_AUTHOR = '@copper-zendesk/add_customer_initial_data';
 
 var COPPER_API_HEADERS = { 
-  "X-PW-AccessToken": '{{setting.token}}',
+  "X-PW-AccessToken": '{{setting.api_key}}',
   "X-PW-Application": 'developer_api',
   "X-PW-UserEmail": '{{setting.email}}',
   "Content-Type": 'application/json'
