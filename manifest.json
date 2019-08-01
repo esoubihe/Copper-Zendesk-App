@@ -21,14 +21,14 @@
       "label": "Copper Email",
       "type": "text",
       "required": true,
-      "secure": true
+      "secure": false
     },
     {
       "name": "api_key",
       "label": "API Key",
       "type": "text",
       "required": true,
-      "secure": true
+      "secure": false
     }
   ]
 }
