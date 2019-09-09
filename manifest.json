@@ -5,6 +5,7 @@
     "email": "engineering@maxihost.com",
     "url": "https://www.maxihost.com"
   },
+  "termsConditionsURL": "https://copper-by-maxihost-app.s3-sa-east-1.amazonaws.com/TermsAndConditions.txt",
   "defaultLocale": "en",
   "private": false,
   "location": {

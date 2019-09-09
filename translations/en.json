@@ -2,7 +2,7 @@
     "app": {
       "name": "Copper by Maxihost",
       "short_description": "See data from your Copper CRM in Zendesk",
-      "long_description": "With Copper for Zendesk you can view and add people to your Copper CRM account, making it easier for sales reps to manage the CRM from the ticket tab.",
+      "long_description": "Copper is the CRM for G Suite users. With Copper you can manage sales, customer relationships and get email tracking inside Gmail. The Copper by Maxihost integration lets you view and add people to your Copper account, making it easier for sales reps to manage the CRM from the Zendesk Support ticket page.",
       "installation_instructions": "1. After installing the app in your Zendesk account, navigate to Admin > Manage and select the Copper CRM app.\n2. Go to your Copper account, click on Settings > API Keys and generate an API key.\n3. Go back to Zendesk and insert your recently generated API key in the API Key field and your email in the Email field under App Configuration.\n4. Go to any ticket. You should now see contact information from Copper directly in Support."
     }
   }
