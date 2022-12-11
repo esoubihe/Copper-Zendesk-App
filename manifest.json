@@ -25,6 +25,11 @@
       "secure": false
     },
     {
+      "name": "company_id",
+      "label": "Company ID",
+      "description": "You can find the Company ID in the URL of your Copper dashboard where in 'app.copper.com/companies/1234/app...' your Company ID would be 1234."
+    },
+    {
       "name": "api_key",
       "label": "API Key",
       "type": "text",

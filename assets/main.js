@@ -27,6 +27,11 @@ function switchTo(template_name, context) {
   var template_id = "#" + template_name;
   var source = $(template_id).html();
   var template = Handlebars.compile(source);
+
+  //converts to array to push data into context;
+  
+  context?.custom_fields.push({ 'user_company_id': client._metadata.settings.company_id })
+
   if (context) {
     var html = template(context);
   } else {
@@ -54,7 +59,6 @@ function safeLocalstorageSetItem(key, item) {
 }
 
 function getProfile() {
-  console.log(client);
   showLoading();
   var RESOURCE_NOT_FOUND = "Resource not found";
   client.get("ticket").then(function (data) {
