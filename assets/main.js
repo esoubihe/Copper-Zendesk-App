@@ -29,8 +29,11 @@ function switchTo(template_name, context) {
   var template = Handlebars.compile(source);
 
   //converts to array to push data into context;
-  
-  context?.custom_fields.push({ 'user_company_id': client._metadata.settings.company_id })
+  if (template_name == "tasks-hdbs") {
+    context?.custom_fields.push({
+      user_company_id: client._metadata.settings.company_id,
+    });
+  }
 
   if (context) {
     var html = template(context);
@@ -113,7 +116,7 @@ function showError(response) {
 }
 
 function initTicketApp() {
-  client.invoke("resize", { width: "100%", height: "200px" });
+  client.invoke("resize", { width: "100%", height: "250px" });
   getProfile();
 }
 
@@ -230,14 +233,8 @@ function getCurrentTicketAuthor() {
   return currentTicketAuthor;
 }
 
-function addCustomerFormValidation() {
-  // TODO: form validation
-  return {};
-}
-
 function populateOwnersDropdown() {
   var dropdown = $("#owners-select");
-  dropdown.dropdown({});
   var settings = {
     url: COPPER_URL + "/users/search",
     headers: COPPER_API_HEADERS(
@@ -256,7 +253,9 @@ function populateOwnersDropdown() {
     .request(settings)
     .then(function (data) {
       $.each(data, function () {
-        dropdown.append($("<option />").val(this.id).text(this.name));
+        dropdown.append(
+          $("<option class='text-sm' />").val(this.id).text(this.name)
+        );
       });
     })
     .catch(function (response) {
@@ -271,7 +270,6 @@ function initAddCustomerModal() {
   populateOwnersDropdown();
   var formElement = $("#add-customer-form");
   if (formElement) {
-    formElement.form(addCustomerFormValidation);
     formElement.on("submit", onAddCustomerSubmit);
   }
 }
