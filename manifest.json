@@ -13,7 +13,7 @@
       "ticket_sidebar": "assets/iframe.html"
     }
   },
-  "domainWhitelist": ["api.prosperworks.com"],
+  "domainWhitelist": ["api.copper.com"],
   "version": "1.1",
   "frameworkVersion": "2.0",
   "parameters": [
