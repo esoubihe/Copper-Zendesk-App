@@ -185,7 +185,7 @@ function onAddCustomerSubmit(event) {
   };
   var newCopperUserObject = createNewCopperUserObject(formData);
   var settings = {
-    url: "https://api.copper.com/developer_api/v1/people",
+    url: COPPER_URL + "/people",
     headers: COPPER_API_HEADERS(
       client._metadata.settings.email,
       client._metadata.settings.api_key
@@ -235,7 +235,7 @@ function populateOwnersDropdown() {
   var dropdown = $("#owners-select");
   dropdown.dropdown({});
   var settings = {
-    url: "https://api.copper.com/developer_api/v1/users/search",
+    url: COPPER_URL + "/users/search",
     headers: COPPER_API_HEADERS(
       client._metadata.settings.email,
       client._metadata.settings.api_key
