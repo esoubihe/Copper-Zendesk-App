@@ -1,0 +1,290 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link href="main.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="content" style="padding: 1px"></div>
+
+    <script id="tasks-hdbs" type="text/x-handlebars-template">
+      <div>
+        <dl>
+          <div class="py-2 sm:grid grid-cols-2 sm:grid-cols-2 sm:gap-2 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">Name</dt>
+            <dd class="mt-1 flex text-sm text-gray-900 sm:col-span-1 sm:mt-0">
+              <span class="flex-grow">
+                <a
+                  href="https://app.copper.com/companies/{{custom_fields.0.user_company_id}}/app#/contacts/default/contact/{{id}}"
+                  target="_blank"
+                  class="flex items-center gap-x-2 text-[#1f73b7] hover:text-[#144a75]"
+                >{{name}}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                    ></path>
+                  </svg>
+                </a>
+              </span>
+            </dd>
+          </div>
+
+          <div class="py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">Company</dt>
+            <dd class="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <span class="flex-grow">
+                <a
+                  href="https://app.copper.com/companies/{{custom_fields.0.user_company_id}}/app#/organizations/default/organization/{{company_id}}"
+                  target="_blank"
+                  class="flex items-center gap-x-2 text-[#1f73b7] hover:text-[#144a75]"
+                >{{company_name}}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                    ></path>
+                  </svg>
+                </a>
+              </span>
+            </dd>
+          </div>
+
+          <div class="py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">Emails</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              {{#each emails}}
+                <div class="flex justify-between pb-2">
+                  <a
+                    href="mailto:{{email}}"
+                    class="hover:text-[#144a75]"
+                  >{{email}}</a>
+                  <span
+                    class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800"
+                  >{{category}}</span>
+                </div>
+              {{/each}}
+
+            </dd>
+          </div>
+        </dl>
+
+      </div>
+    </script>
+
+    <script id="add-customer" type="text/x-handlebars-template">
+      <button
+        type="button"
+        class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 outline-none"
+        onclick="openAddCustomerModal()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="mx-auto h-12 w-12 text-gray-400"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+          ></path>
+        </svg>
+
+        <span class="mt-2 block text-sm font-medium text-gray-900">Add to Copper</span>
+      </button>
+    </script>
+
+    <script id="add-customer-form" type="text/x-handlebars-template">
+      <form action="#" id="add-customer-form">
+        <div>
+          <div>
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Add to
+              Copper</h3>
+            <p class="mt-1 text-sm text-gray-600">Creates a People record in
+              Copper.</p>
+          </div>
+
+          <div class="mt-4">
+
+            <div class="py-2">
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-700"
+              >Full name</label>
+              <div class="mt-1">
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  class="block w-full rounded-sm border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                  value="{{name}}"
+                  placeholder="Full name"
+                  required
+                />
+              </div>
+            </div>
+            <div class="py-2">
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-700"
+              >Email</label>
+              <div class="mt-1">
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  class="block w-full rounded-sm border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                  value="{{email}}"
+                  placeholder="Email"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="py-2">
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-700"
+              >Title</label>
+              <div class="mt-1">
+                <input
+                  type="text"
+                  name="title"
+                  id="title"
+                  class="block w-full rounded-sm border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                  placeholder="Title"
+                />
+              </div>
+            </div>
+
+            <div class="py-2">
+              <label
+                for="owners-select"
+                class="block text-sm font-medium text-gray-700"
+              >Owner</label>
+              <select
+                id="owners-select"
+                name="owners-select"
+                class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              >
+                <option value="" class="text-sm">Select owner</option>
+              </select>
+            </div>
+
+            <div class="py-2">
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-700"
+              >Street</label>
+              <div class="mt-1">
+                <input
+                  type="text"
+                  name="street"
+                  id="street"
+                  class="block w-full rounded-sm border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                  placeholder="Street address"
+                />
+              </div>
+            </div>
+
+            <div class="py-2">
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-700"
+              >City</label>
+              <div class="mt-1">
+                <input
+                  type="text"
+                  name="city"
+                  id="city"
+                  class="block w-full rounded-sm border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                  placeholder="City"
+                />
+              </div>
+            </div>
+
+            <div class="py-2">
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-700"
+              >Country</label>
+              <div class="mt-1">
+                <input
+                  type="text"
+                  name="country"
+                  id="country"
+                  class="block w-full rounded-sm border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                  placeholder="Country"
+                />
+              </div>
+            </div>
+
+            <div class="py-2">
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-700"
+              >Phone number</label>
+              <div class="mt-1">
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  id="phoneNumber"
+                  class="block w-full rounded-sm border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                  placeholder="Phone number"
+                />
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <button
+                type="submit"
+                class="inline-flex items-center rounded-sm border border-transparent bg-indigo-600 px-4 py-1 text-md font-medium text-white shadow-sm hover:bg-[#2B41B2] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-full"
+              ><span class="mx-auto">Create</span></button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </script>
+
+    <script id="error-hdbs" type="text/x-handlebars-template">
+      <p>{{status}}: {{statusText}}</p>
+    </script>
+
+    <script id="loading" type="text/x-handlebars-template">
+      <div class="ui active inverted dimmer">
+        <div class="ui text loader">Loading</div>
+      </div>
+    </script>
+
+    <!-- https://github.com/zendesk/zendesk_app_framework_sdk -->
+    <script
+      type="text/javascript"
+      src="https://static.zdassets.com/zendesk_app_framework_sdk/2.0/zaf_sdk.min.js"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "name": "Copper",
+  "author": {
+    "name": "Fifty4",
+    "email": "hello@fifty4.io",
+    "url": "https://www.fifty4.io"
+  },
+  "termsConditionsURL": "https://copper-by-maxihost-app.s3-sa-east-1.amazonaws.com/TermsAndConditions.txt",
+  "defaultLocale": "en",
+  "private": false,
+  "location": {
+    "support": {
+      "ticket_sidebar": "assets/iframe.html"
+    }
+  },
+  "domainWhitelist": ["api.copper.com"],
+  "version": "1.1",
+  "frameworkVersion": "2.0",
+  "parameters": [
+    {
+      "name": "email",
+      "type": "text",
+      "required": true
+    },
+    {
+      "name": "company_id",
+      "required": true
+    },
+    {
+      "name": "api_key",
+      "type": "text",
+      "required": true,
+      "secure": true
+    }
+  ]
+}

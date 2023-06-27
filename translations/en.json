@@ -1,0 +1,22 @@
+{
+  "app": {
+    "name": "Copper by Fifty4",
+    "short_description": "View and create leads from your Copper CRM in Zendesk Support",
+    "long_description": "### What is Fifty4 and Copper\n[Fifty4](https://fifty4.io) is a development studio building productivity apps and integrations to help individuals and businesses improve their workflows.\n\nCopper is the CRM for G Suite users. With Copper you can manage sales, customer relationships and get email tracking inside Gmail.\n\n### The integration\nThe Copper by Fifty4 integration lets you view and add people to your Copper account, making it easy for sales reps to manage your CRM from the Zendesk Support ticket page.\n\n- Add people to your CRM without leaving Zendesk, based on ticket data.\n\n- Add additional information, such as address, phone, etc.\n\n- See if the ticket requester exists in your Copper account.",
+    "installation_instructions": "1. After installing the app in your Zendesk account, navigate to Admin > Manage and select the Copper CRM app.\n2. Go to your Copper account, click on Settings > API Keys and generate an API key.\n3. Go back to Zendesk and insert your recently generated API key in the API Key field and your email in the Email field under App Configuration.\n4. Go to any ticket. You should now see contact information from Copper directly in Support.",
+    "parameters": {
+      "email": {
+        "label": "Email",
+        "helpText": "The email you use to access Copper."
+      },
+      "company_id": {
+        "label": "Company ID",
+        "helpText": "You can find the Company ID in the URL of your Copper dashboard where in 'app.copper.com/companies/1234/app...' your Company ID would be 1234."
+      },
+      "api_key": {
+        "label": "API Key",
+        "helpText": "Generate an API key by going to Settings -> Integrations -> API keys on your Copper dashboard."
+      }
+    }
+  }
+}
